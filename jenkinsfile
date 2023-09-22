@@ -4,7 +4,7 @@ pipeline{
         stage{
             steps{
                 git clone: "https://github.com/ramesh1469/Nopcommerce.git",
-                git branch: "main"
+                branch: "main"
 
             }
         }
@@ -14,9 +14,9 @@ pipeline{
                 withSonarQubeEnv('sonar') {
                 sh 'dotnet build. sonar:sonar' 
             }
-}
+          }
         }
-        stage{
+        stage ("docker image"){
             steps{
                 sh "docker image build -t ram:1.0 ."
             }
