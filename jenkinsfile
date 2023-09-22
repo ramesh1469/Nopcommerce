@@ -13,7 +13,7 @@ pipeline{
             steps{
                 withSonarQubeEnv('sonar') {
                 sh 'dotnet sonarscanner begin /k:"sonar" /d:sonar.host.url="http://3.141.34.170:32768"  /d:sonar.token="sqp_1b439582af8ac65313432e37a33ce4157cb7aa87"',
-                sh 'dotnet build',
+                sh 'dotnet build Nop.Web',
                 sh 'dotnet sonarscanner end /d:sonar.token="sqp_1b439582af8ac65313432e37a33ce4157cb7aa87"'
             }
           }
