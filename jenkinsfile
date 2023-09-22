@@ -12,6 +12,7 @@ pipeline{
             agent { label "Docker"}
             steps{
                 withSonarQubeEnv('sonar') {
+                sh 'cd src/Presentation/Nop.Web/Areas/Admin/Views/Report/ ',
                 sh 'dotnet build. sonar:sonar' 
             }
           }
