@@ -13,14 +13,19 @@ pipeline{
             steps{
                 withSonarQubeEnv('sonar') {
                 sh 'dotnet sonarscanner begin /k:"sonar" /d:sonar.host.url="http://3.141.34.170:32768"  /d:sonar.token="sqp_1b439582af8ac65313432e37a33ce4157cb7aa87"',
-                sh 'dotnet build sonar:sonar',
+                sh 'dotnet build .',
                 sh 'dotnet sonarscanner end /d:sonar.token="sqp_1b439582af8ac65313432e37a33ce4157cb7aa87"'
             }
           }
         }
         stage ("docker image"){
             steps{
-                sh "docker image build -t ram:1.0 ."
+                sh '''
+                    aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w3l4u7g2
+                    docker build -t ram2 .
+                    docker tag ram2:latest public.ecr.aws/w3l4u7g2/ram2:latest
+                    docker push public.ecr.aws/w3l4u7g2/ram2:latest
+                    '''                  
             }
         }
     }
