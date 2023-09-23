@@ -13,7 +13,7 @@ pipeline{
             steps{
                 sh """
                     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w3l4u7g2,
-                    docker build -t ram2 .,
+                    docker image build -t ram2 . ,
                     docker tag ram2:latest public.ecr.aws/w3l4u7g2/ram2:latest,
                     docker push public.ecr.aws/w3l4u7g2/ram2:latest
                     """                  
