@@ -8,27 +8,16 @@ pipeline{
 
             }
         }
-        stage ("build & SonarQube analysis"){
+        stage ("docker image"){
             agent { label "Docker"}
             steps{
-                withSonarQubeEnv('sonar') {
-                sh '''
-                    SonarScanner.MSBuild.exe begin /k:"devops" /d:sonar.host.url="http://3.136.37.2:32768" /d:sonar.token="sqp_808838da3be27167810f638996ae63f23bf7a83c",
-                    MsBuild.exe /t:Rebuild,
-                    SonarScanner.MSBuild.exe end /d:sonar.token="sqp_808838da3be27167810f638996ae63f23bf7a83c"
-                    '''
-          }
-         }
-        } 
-        stage ("docker image"){
-            steps{
-                sh '''
+                sh """
                     aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w3l4u7g2,
                     docker build -t ram2 .,
                     docker tag ram2:latest public.ecr.aws/w3l4u7g2/ram2:latest,
-                    docker push public.ecr.aws/w3l4u7g2/ram2:latest,
-                    '''                  
+                    docker push public.ecr.aws/w3l4u7g2/ram2:latest
+                    """                  
             }
-     } 
-  }
+        } 
+    }
 }
