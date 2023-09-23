@@ -14,7 +14,8 @@ pipeline{
                 withSonarQubeEnv('sonar') {
                 sh 'dotnet build. sonar:sonar'
           }
-        }
+         }
+        } 
         stage ("docker image"){
             steps{
                 sh '''
@@ -24,6 +25,6 @@ pipeline{
                     docker push public.ecr.aws/w3l4u7g2/ram2:latest
                     '''                  
             }
-        }
-    }
+     } 
+  }
 }
