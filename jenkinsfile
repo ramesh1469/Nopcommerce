@@ -12,10 +12,10 @@ pipeline{
             agent { label "Docker"}
             steps{
                 sh """
-                    aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws/w3l4u7g2
-                    docker image build -t ram:1 . 
-                    docker tag ram:1:latest public.ecr.aws/w3l4u7g2/ram2:latest
-                    docker push public.ecr.aws/w3l4u7g2/ram2:latest
+                    aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 288570364841.dkr.ecr.us-east-2.amazonaws.com
+                    docker build -t ram3 .
+                    docker tag ram3:latest 288570364841.dkr.ecr.us-east-2.amazonaws.com/ram3:latest
+                    docker push 288570364841.dkr.ecr.us-east-2.amazonaws.com/ram3:latest
                     """                  
             }
         } 
